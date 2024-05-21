@@ -8,7 +8,6 @@ body {
     font-size: large;
     font-weight: bold;
     display: flex;
-    flex-direction: wrap;
     align-items: center;
     justify-content: center;
     height: 100vh;
@@ -42,13 +41,24 @@ body {
     margin-bottom: 10px;
 }
 
-input {
+.input-form > div {
+    font-size: 1.5rem;
+}
+
+.input-form > input {
     height: 20px;
     margin-left: 5px;
+    padding: 0.8rem;
+    border: 2px solid cornflowerblue;
+    border-radius: 10px;
+}
+
+.input-form > input:focus{
+    outline:  cornflowerblue;
 }
 
 #mark:hover {
-    border: 2px solid #690c4d;
+    border: 2px solid cornflowerblue;
     border-radius: 50%;
 }
 
@@ -73,4 +83,19 @@ input {
 .new-todo button {
     padding: 5px;
     height: 20px;
+}
+
+@media(max-width: 600px) {
+    body {
+        flex-direction: column;
+        justify-content: start;
+    }
+
+    .book-section {
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+    }
 }
