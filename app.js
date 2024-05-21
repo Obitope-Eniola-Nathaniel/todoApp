@@ -1,10 +1,17 @@
 const input = document.querySelector('#input')
 const mark = document.querySelector('#mark')
 const todoOutput = document.querySelector('.todo-outputs')
+const todoUpdates = document.querySelector('.todo-updates')
 
 
 
 let todoItems = [];
+
+function todoUpdate() {
+    let numberOfTodo = todoItems.length;
+    todoUpdates.innerHTML = `You have ${numberOfTodo} Todo`;
+}
+
 
 // get input user todoItem
 
@@ -78,6 +85,5 @@ mark.addEventListener('click', ()=> {
     displayItems(todos)
     // console.log(todos)
     selectAllTodo()
-   
-   
+    todoUpdate()
 })
