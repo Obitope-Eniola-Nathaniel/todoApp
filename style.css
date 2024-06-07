@@ -8,8 +8,10 @@ body {
     font-size: large;
     font-weight: bold;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    /* justify-content: center; */
+    text-align: center;
     height: 100vh;
     padding: 10px;
 }

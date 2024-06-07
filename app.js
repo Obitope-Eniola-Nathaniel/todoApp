@@ -4,8 +4,11 @@ const todoOutput = document.querySelector('.todo-outputs')
 const todoUpdates = document.querySelector('.todo-updates')
 
 
+let todoItems = localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : [];
+// let todoItems = []
+// console.log(todoItems)
 
-let todoItems = [];
+// localStorage.clear();
 
 function todoUpdate() {
     let numberOfTodo = todoItems.length;
@@ -14,76 +17,89 @@ function todoUpdate() {
 
 
 // get input user todoItem
-
 function getInput() {
-    const todo = input.value
+    const todo = input.value;
+
     if (todo.trim() === ''){
         alert('Please input a todo!');
+        return;
     }
-    // todoItem.push(todo)
- 
+
     const newTodo = {
-        item: todo
+        id: Math.random(),
+        todoItem: todo
     };
+    console.log(newTodo.id)
+    // todoItems = localStorage.getItem(newTodo.id) ? JSON.parse(localStorage.getItem(newTodo.id)) : [];
 
     todoItems.push(newTodo);
+    localStorage.setItem(newTodo.id, JSON.stringify(todoItems));
+
+    addTask(newTodo.todoItem, newTodo.id);
+    input.value = "";
     console.log(newTodo)
-    input.value = ""
-    return todo
 }
 
 
-// function displayItems(items) {
-//     const tag = document.createElement("div")
-//     const tagItem = document.createTextNode(items)
-//     tag.style.display = 'inline-block'
-//     tag.appendChild(tagItem)
-//     // tag.textContent = items
-//     todoOutput.appendChild(tag)
-//     // console.log(tag)
-//     // deleteFuntion()
-// }
-
-function displayItems(todos) {
+// todoItems.forEach(addTask);
+function addTask(todo, id) {
+    // Create a new element
     const tag = document.createElement("div");
     tag.className = "new-todo";
-    tag.innerHTML = `${todos}`;
+    tag.innerHTML = `${todo}`;
+    // Append the new created element to todoOutput
     todoOutput.append(tag);
+
+    // Create an Image element
     const btn = document.createElement("img");
     btn.src = 'btn1.png';
     btn.height = 25;
     btn.width = 25;
+    btn.className = 'btn-img'
+    // Append the new img element to tag element
     tag.append(btn);
 
-    btn.addEventListener('click', ()=> {
-        tag.remove()
-    })
+    // Create and event listner and bind it to an id
+    btn.addEventListener('click', removeItemArray.bind(null, id));
+
+    // Create a check box element
     const input = document.createElement("input");
     input.type = "checkbox";
     tag.prepend(input);
+
 }
 
-// function deleteFuntion() {
-//     let tag = document.createElement("button")
-//     let tagItem = document.createTextNode('x')
-//     tag.appendChild(tagItem)
-//     // tag.textContent = items
-//     todoOutput.appendChild(tag)
-// }
+
+function removeItemArray(listId) {
+    let listIndex = 0;
+    for (const list of todoItems) {
+        if (list.id === listId) {
+            break;
+        }
+        listIndex++;
+    }
+    todoItems.splice(listIndex, 1);
+    console.log(todoItems)
+    localStorage.removeItem(listId)
+    todoOutput.children[listIndex].remove();
+    todoUpdate()
+}
+
 
 function selectAllTodo() {
-    const todosList = todoOutput.querySelectorAll('div')
-    console.log(todosList)
-
+    const todosList = todoOutput.querySelectorAll('div');
+    // console.log(todosList)
 }
 
 // store it in the array
 // display the items in the array
 
 mark.addEventListener('click', ()=> {
-    todos = getInput()
-    displayItems(todos)
-    // console.log(todos)
+    getInput()
     selectAllTodo()
     todoUpdate()
 })
+
+
+console.log(todoItems)
+// localStorage.clear();
